@@ -4,9 +4,6 @@ class AudioSystem:
     
     def focus_device(self, device_name):
         for name, device in self.audio_devices.items():
-            if name == device_name:
-                device.mute_off()
-            else:
-                device.mute_on()
+            device.mute(name != device_name)
 
     
