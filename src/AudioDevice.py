@@ -11,14 +11,21 @@ class AudioDevice:
     def get_name(self) -> str:
         # not implemented
         pass
-
     
+
     @timeout(1)
-    def mute(self, mute: bool):
+    def mute_with_timeout(self, mute: bool):
         if mute:
             self.mute_on()
         else:
             self.mute_off()
+
+    def mute(self, mute: bool):
+        try: 
+            self.mute_with_timeout(mute)
+        except TimeoutError:
+            pass
+
     
     def mute_on(self):
         if not self.already_muted():
