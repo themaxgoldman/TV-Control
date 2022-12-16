@@ -1,4 +1,6 @@
 import time
+from wrapt_timeout_decorator import *
+
 
 
 class AudioDevice:
@@ -10,6 +12,8 @@ class AudioDevice:
         # not implemented
         pass
 
+    
+    @timeout(1)
     def mute(self, mute: bool):
         if mute:
             self.mute_on()
