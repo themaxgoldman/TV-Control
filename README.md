@@ -1,23 +1,38 @@
-Audio Device Control System
-This code provides a system for controlling multiple audio devices, including Vizio TVs and Denon Receivers.
+# TV Control
+This repository contains a Python module for controlling an audio system that consists of one or more audio devices.
 
-Classes
-AudioDevice
-This is an abstract base class for audio devices that can be controlled by the system. It has the following methods:
+## Classes
+- `AudioDevice`: Abstract base class for audio devices. Contains methods for muting and unmuting the device, setting and getting the volume, and checking if the device is already muted.
+- `DenonReceiver`: Concrete implementation of AudioDevice for Denon receivers. Contains methods for sending commands over a telnet connection to control the device.
+- `VizioTv`: Concrete implementation of AudioDevice for Vizio TVs. Contains methods for sending HTTP requests to control the device.
+- `AudioSystem`: Class that represents an audio system, where the audio system consists of one or more audio devices. Contains a method for focusing on a specific device, by muting all other devices and unmuting the specified device.
+- `Config`: Class for parsing a configuration file and creating instances of DenonReceiver and VizioTv based on the configuration.
 
-mute: Mutes or unmutes the device, depending on the value of the mute parameter.
-mute_on: Mutes the device.
-mute_off: Unmutes the device.
-already_muted: Returns a boolean indicating whether the device is currently muted.
-get_volume: Returns the current volume of the device.
-set_volume: Sets the volume of the device to the target volume specified as a parameter.
-AudioSystem
-This class is responsible for managing a collection of audio devices. It has the following methods:
+## Example
+```
+import json
+from AudioSystem import AudioSystem, Config
 
-__init__: Constructor that takes in an arbitrary number of audio devices and stores them in a dictionary with the device names as keys.
-focus_device: Mutes all devices except for the one specified by the device_name parameter.
-VizioTv
-This class inherits from AudioDevice and provides implementation details for controlling Vizio TVs. It has methods for sending commands to the TV over a network connection, such as send_mute_on_command and send_get_volume_command.
+with open('config.json', 'r') as f:
+    config = json.load(f)
 
-DenonReceiver
-This class also inherits from AudioDevice and provides implementation details for controlling Denon Receivers. It uses the telnetlib module to establish a Telnet connection with the receiver and has methods for sending commands over this connection, such as send_mute_on_command and send_get_volume_command.
+audio_system = AudioSystem(Config("config.json").get_audio_devices())
+audio_system.focus_device('Living Room Receiver')
+```
+
+## Configuration
+```
+{
+  "device_name_1": {
+    "platform": "denonavr" or "viziotv",
+    "host": "hostname",
+    "port": "port",
+    "timeout": timeout (only for denonavr),
+    "auth_token": "auth_token" (only for viziotv)
+  },
+  "device_name_2": {
+    ...
+  }
+}
+
+```
