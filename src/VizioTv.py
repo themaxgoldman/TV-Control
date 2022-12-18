@@ -9,7 +9,7 @@ class VizioTv(AudioDevice) :
         self.name = name
 
     def get_name(self) -> str:
-        return self.vizio_tv.name
+        return self.name
 
     def send_mute_on_command(self):
         asyncio.get_event_loop().run_until_complete(self.vizio_tv.mute_on())
@@ -18,7 +18,7 @@ class VizioTv(AudioDevice) :
         asyncio.get_event_loop().run_until_complete(self.vizio_tv.mute_off())
 
     def send_already_muted_command(self) -> bool:
-        asyncio.get_event_loop().run_until_complete(self.vizio_tv.is_muted())
+        return asyncio.get_event_loop().run_until_complete(self.vizio_tv.is_muted())
 
     def get_volume(self) -> int:
         asyncio.get_event_loop().run_until_complete(self.vizio_tv.get_current_volume())
