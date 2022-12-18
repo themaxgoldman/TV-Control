@@ -28,7 +28,8 @@ class AudioDevice:
 
     
     def mute_on(self):
-        if not self.already_muted():
+        already_muted = self.already_muted()
+        if not already_muted:
             self.send_mute_on_command()
 
     def send_mute_on_command(self):
@@ -44,7 +45,7 @@ class AudioDevice:
         pass
 
     def already_muted(self) -> bool:
-        self.send_already_muted_command()
+        return self.send_already_muted_command()
     
     def send_already_muted_command(self) -> bool:
         # not implemented
