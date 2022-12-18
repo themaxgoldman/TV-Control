@@ -1,5 +1,5 @@
 class AudioSystem:
-    def __init__(self, *audio_devices):
+    def __init__(self, audio_devices):
         self.audio_devices = {device.get_name():device for device in audio_devices}
     
     def focus_device(self, device_name):
