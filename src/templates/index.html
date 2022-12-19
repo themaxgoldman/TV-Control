@@ -1,13 +1,13 @@
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="/static/style.css" />
+    <link rel="stylesheet" type="text/css" href="static/style.css" />
   </head>
   <body>
     <div class="container">
       <h1>TV Focus</h1>
       <div id="device-buttons">
         {% for device_name in device_names %}
-          <button onclick="focusDevice('{{ device_name }}')">{{ device_name }}</button>
+          <button class="device-button" onclick="focusDevice('{{ device_name }}')">{{ device_name }}</button>
         {% endfor %}
       </div>
     </div>
