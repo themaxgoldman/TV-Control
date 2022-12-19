@@ -3,26 +3,29 @@ import pyvizio
 import time
 from AudioDevice import AudioDevice
 
-class VizioTv(AudioDevice) :
+
+class VizioTv(AudioDevice):
     def __init__(self, name, ip_port, auth_token):
-        self.vizio_tv = pyvizio.VizioAsync(name + str("_id"), ip_port, name, auth_token, "tv", None, None)
+        self.vizio_tv = pyvizio.VizioAsync(
+            name + str("_id"), ip_port, name, auth_token, "tv", None, None)
         self.name = name
+        self.event_loop = asyncio.new_event_loop()
 
     def get_name(self) -> str:
         return self.name
 
     def send_mute_on_command(self):
-        asyncio.get_event_loop().run_until_complete(self.vizio_tv.mute_on())
+        return self.event_loop.run_until_complete(self.vizio_tv.mute_on())
 
     def send_mute_off_command(self):
-        asyncio.get_event_loop().run_until_complete(self.vizio_tv.mute_off())
+        return self.event_loop.run_until_complete(self.vizio_tv.mute_off())
 
     def send_already_muted_command(self) -> bool:
-        return asyncio.get_event_loop().run_until_complete(self.vizio_tv.is_muted())
+        return self.event_loop.run_until_complete(self.vizio_tv.is_muted())
 
     def get_volume(self) -> int:
         asyncio.get_event_loop().run_until_complete(self.vizio_tv.get_current_volume())
-    
+
     def set_volume(self, target_volume: int):
         iterations = 0
         while current_volume != target_volume and iterations < 10:
@@ -37,6 +40,6 @@ class VizioTv(AudioDevice) :
 
     def send_volume_up_command(self, change: int):
         asyncio.get_event_loop().run_until_complete(self.vizio_tv.vol_up(change))
-    
+
     def send_volume_down_command(self, change: int):
         asyncio.get_event_loop().run_until_complete(self.vizio_tv.vol_down(-1 * change))
