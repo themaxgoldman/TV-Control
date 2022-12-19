@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="/static/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>TV Focus</h1>
+      <div id="device-buttons">
+        {% for device_name in device_names %}
+          <button onclick="focusDevice('{{ device_name }}')">{{ device_name }}</button>
+        {% endfor %}
+      </div>
+    </div>
+    <script>
+      function focusDevice(deviceName) {
+        fetch(`/focus/${deviceName}`)
+          .then(res => res.text())
+          .then(res => console.log(res))
+          .catch(err => console.log(err));
+      }
+    </script>
+  </body>
+</html>
