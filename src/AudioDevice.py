@@ -2,6 +2,7 @@ import time
 import signal
 import threading
 
+
 class AudioDevice:
 
     def __init__(self):
@@ -11,9 +12,9 @@ class AudioDevice:
     def get_name(self) -> str:
         # not implemented
         pass
-    
 
     # Run the given function with a timeout
+
     def run_with_timeout(self, func, timeout):
         # Create a new thread
         thread = threading.Thread(target=func)
@@ -40,7 +41,7 @@ class AudioDevice:
 
     # Mute the device
     def mute(self, mute: bool):
-        try: 
+        try:
             self.mute_with_timeout(mute)
         except TimeoutError:
             pass

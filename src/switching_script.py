@@ -1,6 +1,5 @@
 import sys
 from VizioTv import VizioTv
-from DenonReceiver import DenonReceiver
 from AudioSystem import AudioSystem
 from Config import Config
 
