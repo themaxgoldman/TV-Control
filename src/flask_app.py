@@ -11,9 +11,17 @@ audio_system = AudioSystem(Config(config_file).get_audio_devices())
 device_names = list(audio_system.audio_devices.keys())
 
 
+# Gets device names sorted by ordering
+def get_device_names():
+    with open(config_file, 'r') as f:
+        config = json.load(f)
+    return sorted(config, key=lambda k: config[k]['ordering'])
+
+
 @app.route('/')
 def index():
-    return render_template('index.html', device_names=device_names)
+    sorted_device_names = sorted(device_names)
+    return render_template('index.html', device_names=get_device_names())
 
 
 @app.route('/focus/<device_name>')

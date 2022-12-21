@@ -2,12 +2,13 @@
 
 <head>
   <link rel="stylesheet" type="text/css" href="/static/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
   <div class="container">
     <h1 class="title">TV Focus</h1>
-    <div id="device-buttons">
+    <div id="device-buttons" class="device-buttons">
       {% for device_name in device_names %}
       <button class="device-button" onclick="focusDevice('{{ device_name }}')">{{ device_name }}</button>
       {% endfor %}
